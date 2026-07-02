@@ -486,10 +486,12 @@ declare
   v_org_id uuid;
   v_role public.user_role;
 begin
-  if new.raw_user_meta_data ? 'organization_id' then
-    -- Invitación / seed: se une a una org existente
-    v_org_id := (new.raw_user_meta_data ->> 'organization_id')::uuid;
-    v_role := coalesce((new.raw_user_meta_data ->> 'role')::public.user_role, 'agent');
+  -- Invitación / seed: organization_id viene en app_metadata, que SOLO se
+  -- puede fijar server-side (admin API). Nunca leerlo de user_metadata:
+  -- el cliente lo controla en el signup y podría unirse a una org ajena.
+  if new.raw_app_meta_data ? 'organization_id' then
+    v_org_id := (new.raw_app_meta_data ->> 'organization_id')::uuid;
+    v_role := coalesce((new.raw_app_meta_data ->> 'role')::public.user_role, 'agent');
   else
     -- Registro normal: crea su propia org y queda como admin
     insert into public.organizations (name)

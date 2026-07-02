@@ -60,7 +60,8 @@ describe.skipIf(!hasEnv)("RLS multi-tenant por organization_id", () => {
       email: userAEmail,
       password,
       email_confirm: true,
-      user_metadata: { organization_id: orgAId, role: "admin", full_name: "Usuario A" },
+      app_metadata: { organization_id: orgAId, role: "admin" },
+      user_metadata: { full_name: "Usuario A" },
     });
     if (userAError) throw userAError;
     userAId = userA.user!.id;
@@ -69,7 +70,8 @@ describe.skipIf(!hasEnv)("RLS multi-tenant por organization_id", () => {
       email: userBEmail,
       password,
       email_confirm: true,
-      user_metadata: { organization_id: orgBId, role: "admin", full_name: "Usuario B" },
+      app_metadata: { organization_id: orgBId, role: "admin" },
+      user_metadata: { full_name: "Usuario B" },
     });
     if (userBError) throw userBError;
     userBId = userB.user!.id;

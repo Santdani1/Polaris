@@ -552,11 +552,9 @@ async function main() {
     email: ADMIN_EMAIL,
     password: DEMO_PASSWORD,
     email_confirm: true,
-    user_metadata: {
-      organization_id: org.id,
-      role: "admin",
-      full_name: "Daniel Guzmán",
-    },
+    // organization_id/role van en app_metadata (server-side only, ver trigger)
+    app_metadata: { organization_id: org.id, role: "admin" },
+    user_metadata: { full_name: "Daniel Guzmán" },
   });
   if (adminError || !adminUser.user) throw adminError ?? new Error("No se pudo crear el admin");
 
@@ -564,11 +562,8 @@ async function main() {
     email: AGENT_EMAIL,
     password: DEMO_PASSWORD,
     email_confirm: true,
-    user_metadata: {
-      organization_id: org.id,
-      role: "agent",
-      full_name: "Sofía Ramírez",
-    },
+    app_metadata: { organization_id: org.id, role: "agent" },
+    user_metadata: { full_name: "Sofía Ramírez" },
   });
   if (agentError || !agentUser.user) throw agentError ?? new Error("No se pudo crear el agente");
 

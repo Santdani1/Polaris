@@ -12,6 +12,7 @@
     "db:migrate": "supabase db push",
     "db:types": "supabase gen types typescript --linked > src/database.types.ts",
     "db:seed": "tsx src/seed.ts",
+    "db:seed:sql": "tsx src/emit-seed-sql.ts",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"
   },

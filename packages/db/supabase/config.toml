@@ -1,0 +1,9 @@
+# Configuración de Supabase CLI para desarrollo local (`supabase start`).
+# Los valores no listados usan los defaults del CLI.
+project_id = "polaris"
+
+[auth.email]
+enable_signup = true
+# Fase 0: sin confirmación de correo para que registro → login sea inmediato.
+# En producción se habilita junto con el dominio de correo transaccional.
+enable_confirmations = false

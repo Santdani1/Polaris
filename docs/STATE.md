@@ -13,7 +13,16 @@ La infra de base de datos vive en **Lovable Cloud** (Supabase gestionado por Lov
 
 - Proyecto Lovable: "POLARIS — Backend (Lovable Cloud)" en el workspace **Flowstate**, id `5509bb01-e444-4c61-97f0-c1747b39959f` (editor: https://lovable.dev/projects/5509bb01-e444-4c61-97f0-c1747b39959f). El proyecto Lovable es solo el contenedor de la infra; **el dashboard sigue siendo este repo (Next.js)**, fiel a CLAUDE.md.
 - La migration completa (21 tablas + RLS + trigger de signup) y el seed demo ya están aplicados ahí (verificado por queries: 25 leads, 47 lead_events, 3 meetings, 2 conversaciones, 10 mensajes, 30 agent_actions, 2 usuarios con login).
-- **Conexión de la app:** poner la URL y el anon/publishable key del proyecto en `.env` / `apps/web/.env.local` (`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`). Se obtienen en el editor de Lovable (pestaña Cloud) o del archivo `src/integrations/supabase/client.ts` del proyecto Lovable.
+- **Conexión de la app** (`apps/web/.env.local` y `.env` raíz). Estos dos valores son públicos por diseño (viajan en cualquier bundle de frontend); la seguridad la da RLS:
+
+  ```
+  NEXT_PUBLIC_SUPABASE_URL=https://vosdhmojredvyxanwlkv.supabase.co
+  NEXT_PUBLIC_SUPABASE_ANON_KEY=sb_publishable_BxNIgUNE0okPUxwWryEJLw_2dvzB3ce
+  SUPABASE_URL=https://vosdhmojredvyxanwlkv.supabase.co
+  SUPABASE_ANON_KEY=sb_publishable_BxNIgUNE0okPUxwWryEJLw_2dvzB3ce
+  ```
+
+- **Login demo verificado end-to-end contra esa instancia** (2 jul 2026): `admin@promotoriademo.mx` autentica por password, su JWT trae `role: admin` y `organization_id` en app_metadata, y vía REST con RLS ve exactamente sus 25 leads; el anon sin sesión ve 0.
 - **Limitación conocida:** Lovable no expone el `service_role` key → `pnpm db:seed` (admin API) y el test de RLS con supabase-js no corren contra esa instancia. Para eso existe `pnpm --filter @polaris/db db:seed:sql`, que emite el seed como SQL puro para aplicarlo con el runner SQL de Lovable. Los datos del seed viven en `packages/db/src/seed-data.ts`, compartidos por ambos caminos.
 - El RLS de esa instancia quedó verificado a nivel SQL (mismas policies validadas contra Postgres local con la suite de esta sesión).
 

@@ -1,0 +1,30 @@
+# dependencies
+node_modules/
+.pnpm-store/
+
+# next.js
+apps/web/.next/
+apps/web/out/
+next-env.d.ts
+
+# builds
+dist/
+build/
+
+# turbo
+.turbo/
+
+# env — nunca commitear secretos
+.env
+.env.local
+.env.*.local
+
+# supabase local
+packages/db/supabase/.temp/
+packages/db/supabase/.branches/
+
+# misc
+*.log
+.DS_Store
+coverage/
+*.tsbuildinfo

@@ -1,0 +1,28 @@
+{
+  "name": "polaris",
+  "private": true,
+  "version": "0.1.0",
+  "description": "POLARIS — El agente de seguros autónomo + SaaS de control",
+  "packageManager": "pnpm@10.33.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "dev:web": "turbo run dev --filter=@polaris/web",
+    "dev:worker": "turbo run dev --filter=@polaris/worker",
+    "build": "turbo run build",
+    "db:migrate": "pnpm --filter @polaris/db db:migrate",
+    "db:types": "pnpm --filter @polaris/db db:types",
+    "db:seed": "pnpm --filter @polaris/db db:seed",
+    "test": "turbo run test",
+    "lint": "eslint .",
+    "typecheck": "turbo run typecheck"
+  },
+  "devDependencies": {
+    "eslint": "^9.20.0",
+    "turbo": "^2.4.0",
+    "typescript": "^5.7.3",
+    "typescript-eslint": "^8.24.0"
+  }
+}
